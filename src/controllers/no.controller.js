@@ -54,7 +54,7 @@ exports.sincronizar = async (req, res, next) => {
 				objetoDeRetorno.menssagem = 'Senha não iguais'
 			}
 		}else{
-			objetoDeRetorno.menssagem = 'Senha não iguais'
+			objetoDeRetorno.menssagem = 'Dados invalidos'
 		}
 		return res.send(objetoDeRetorno)
 	}catch(error){
