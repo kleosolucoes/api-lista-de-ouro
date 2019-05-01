@@ -12,6 +12,7 @@ exports.sincronizar = async (req, res, next) => {
 		objetoDeRetorno.ok = false 
 		objetoDeRetorno.menssagem = ''
 		objetoDeRetorno.resultado = {}
+		if(req.body.email && req.body.senha){
 
 		const noSelecionado = await No.findOne({email: req.body.email})
 		if(noSelecionado === null){
@@ -55,6 +56,10 @@ exports.sincronizar = async (req, res, next) => {
 		return res.send(objetoDeRetorno)
 	}catch(error){
 		objetoDeRetorno.menssagem = error
+		return res.send(objetoDeRetorno)
+	}
+	}else{
+		objetoDeRetorno.menssagem = 'Dados invalidos'
 		return res.send(objetoDeRetorno)
 	}
 }
