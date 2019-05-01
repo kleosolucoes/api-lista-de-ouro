@@ -7,8 +7,6 @@ import {
 	objetoDeRetorno, 
 } from '../constants'
 
-let refreshTokens = {}
-
 exports.sincronizar = async (req, res, next) => {
 	try{
 		objetoDeRetorno.ok = false 
