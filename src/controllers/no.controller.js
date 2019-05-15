@@ -7,11 +7,42 @@ import {
 	objetoDeRetorno, 
 } from '../constants'
 
-exports.sincronizar = async (req, res, next) => {
+exports.criar = async (req, res, next) => {
+	objetoDeRetorno.ok = false 
+	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.resultado = {}
 	try{
-		objetoDeRetorno.ok = false 
-		objetoDeRetorno.menssagem = ''
-		objetoDeRetorno.resultado = {}
+		if(
+			req.body.nome 
+			&& req.body.telefone
+			&& req.body.email
+			&& req.body.senha
+			&& req.body.pai_id
+		){
+			const noNovo = new No({
+				data_criacao: pegarDataEHoraAtual()[0],
+				hora_criacao: pegarDataEHoraAtual()[1],
+				nome: req.body.nome,
+				telefone: req.body.telefone,
+				email: req.body.email,
+				senha: req.body.senha,
+				pai_id: req.body.pai_id,
+			})
+			noNovo.save((err, res) => {
+				return res.send(objetoDeRetorno)
+			})
+		}
+	}catch(error){
+		objetoDeRetorno.menssagem = error
+		return res.send(objetoDeRetorno)
+	}
+}
+
+exports.sincronizar = async (req, res, next) => {
+	objetoDeRetorno.ok = false 
+	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.resultado = {}
+	try{
 		if(req.body.email && req.body.senha){
 
 			const noSelecionado = await No.findOne({email: req.body.email})
@@ -62,4 +93,22 @@ exports.sincronizar = async (req, res, next) => {
 		return res.send(objetoDeRetorno)
 	}
 
+}
+
+function pegarDataEHoraAtual(){                                                                                                                                                                   
+	let dados = []
+	const dataAtual = new Date()
+	const diaParaDataDeCriacao = dataAtual.getDate().toString().padStart(2, '0')
+	let mesParaDataDeCriacao = dataAtual.getMonth()+1
+	mesParaDataDeCriacao = mesParaDataDeCriacao.toString().padStart(2, '0')
+	const anoParaDataDeCriacao = dataAtual.getFullYear()
+	const dataDeCriacao = diaParaDataDeCriacao + '/' + mesParaDataDeCriacao + '/' + anoParaDataDeCriacao
+	const horaDeCriacao = dataAtual.getHours().toString().padStart(2, '0')
+		+':'+dataAtual.getMinutes().toString().padStart(2, '0')
+		+':'+dataAtual.getSeconds().toString().padStart(2, '0')
+
+	dados.push(dataDeCriacao)
+	dados.push(horaDeCriacao)
+
+	return dados
 }
