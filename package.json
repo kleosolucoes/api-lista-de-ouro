@@ -1,37 +1,34 @@
 {
-  "name": "api-lista-de-ouro",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "agenda": "^2.0.2",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "bcrypt-nodejs": "0.0.3",
-    "body-parse": "^0.1.0",
-    "cors": "^2.8.5",
-    "dotenv-safe": "^6.1.0",
-    "express": "^4.16.4",
-    "helmet": "^3.15.0",
-    "jsonwebtoken": "^8.4.0",
-    "mongodb": "^3.1.10",
-    "mongoose": "^5.3.14",
-    "morgan": "^1.9.1",
-    "nodemon": "^1.18.6"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/node": "^7.2.2"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node src/start.js"
-  },
-  "keywords": [
-    "API",
-    "LISTA",
-    "OURO"
-  ],
-  "author": "",
-  "license": "ISC"
+	"name": "api-lista-de-ouro",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"dependencies": {
+		"babel-preset-env": "^1.7.0",
+		"babel-register": "^6.26.0",
+		"bcrypt-nodejs": "0.0.3",
+		"body-parse": "^0.1.0",
+		"cors": "^2.8.5",
+		"dotenv-safe": "^6.1.0",
+		"express": "^4.16.4",
+		"fs": "0.0.1-security",
+		"helmet": "^3.15.0",
+		"jsonwebtoken": "^8.4.0",
+		"mongodb": "^3.1.10",
+		"mongoose": "^5.3.14",
+		"morgan": "^1.9.1",
+		"node-fetch": "^2.3.0",
+		"nodemon": "^1.18.6",
+		"rand-token": "^0.4.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon ./src/start.js"
+	},
+	"keywords": [
+		"API",
+		"LISTA DE OURO"
+	],
+	"author": "",
+	"license": "ISC"
 }

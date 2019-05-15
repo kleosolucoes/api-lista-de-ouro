@@ -7,7 +7,7 @@ import {
 	objetoDeRetorno, 
 } from '../constants'
 
-exports.criar = async (req, res, next) => {
+exports.criar = (req, res, next) => {
 	objetoDeRetorno.ok = false 
 	objetoDeRetorno.menssagem = ''
 	objetoDeRetorno.resultado = {}
@@ -28,7 +28,8 @@ exports.criar = async (req, res, next) => {
 				senha: req.body.senha,
 				pai_id: req.body.pai_id,
 			})
-			noNovo.save((err, res) => {
+			noNovo.save((res, err) => {
+				objetoDeRetorno.ok = true
 				return res.send(objetoDeRetorno)
 			})
 		}
