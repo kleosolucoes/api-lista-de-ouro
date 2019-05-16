@@ -9,6 +9,7 @@ let schema = new Schema({
 	nome: {type: String, required: true, max: 150},
 	email: {type: String, required: true, max: 100},
 	senha: {type: String, required: true, max: 16},
+	ddd: {type: Number, required: false},
 	telefone: {type: Number, required: false},
 	pai_id: {type: String, required: false},
 })

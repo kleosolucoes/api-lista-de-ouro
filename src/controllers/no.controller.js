@@ -7,31 +7,54 @@ import {
 	objetoDeRetorno, 
 } from '../constants'
 
-exports.criar = (req, res, next) => {
+exports.registrar = (req, res, next) => {
 	objetoDeRetorno.ok = false 
 	objetoDeRetorno.menssagem = ''
 	objetoDeRetorno.resultado = {}
 	try{
 		if(
 			req.body.nome 
+			&& req.body.ddd
 			&& req.body.telefone
 			&& req.body.email
 			&& req.body.senha
-			&& req.body.pai_id
 		){
-			const noNovo = new No({
-				data_criacao: pegarDataEHoraAtual()[0],
-				hora_criacao: pegarDataEHoraAtual()[1],
-				nome: req.body.nome,
-				telefone: req.body.telefone,
-				email: req.body.email,
-				senha: req.body.senha,
-				pai_id: req.body.pai_id,
+			No.findOne({
+				email: req.body.email, 
+				data_inativacao: null
+			}, (err, elemento) => {
+				if(err){
+					objetoDeRetorno.menssagem = 'Erro ao buscar usuario' 
+					return res.json(objetoDeRetorno)
+				}
+				if(elemento === null){
+					const noNovo = new No({
+						data_criacao: pegarDataEHoraAtual()[0],
+						hora_criacao: pegarDataEHoraAtual()[1],
+						nome: req.body.nome,
+						ddd: req.body.ddd,
+						telefone: req.body.telefone,
+						email: req.body.email,
+						senha: req.body.senha,
+						pai_id: req.body.pai_id ? req.body.pai_id : null,
+					})
+					noNovo.save((err, no) => {
+						if(err){
+							objetoDeRetorno,menssagem = err
+							return res.send(objetoDeRetorno)
+						}
+						objetoDeRetorno.ok = true
+						return res.send(objetoDeRetorno)
+					})
+
+				}else{
+					objetoDeRetorno.menssagem = 'Email já utilizado' 
+					return res.json(objetoDeRetorno)
+				}
 			})
-			noNovo.save((res, err) => {
-				objetoDeRetorno.ok = true
-				return res.send(objetoDeRetorno)
-			})
+		}else{
+			objetoDeRetorno,menssagem = 'Dados Invalidos'
+			return res.send(objetoDeRetorno)
 		}
 	}catch(error){
 		objetoDeRetorno.menssagem = error
