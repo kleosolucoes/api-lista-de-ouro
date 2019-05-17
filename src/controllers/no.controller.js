@@ -136,3 +136,42 @@ function pegarDataEHoraAtual(){
 
 	return dados
 }
+
+exports.cadastrarProspecto = (req, res, next) => {
+	objetoDeRetorno.ok = false 
+	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.resultado = {}
+	try{
+		if(
+			req.body.nome 
+			&& req.body.ddd
+			&& req.body.telefone
+			&& req.body.no_id
+		){
+			const novoProspecto = new Prospecto({
+				data_criacao: pegarDataEHoraAtual()[0],
+				hora_criacao: pegarDataEHoraAtual()[1],
+				nome: req.body.nome,
+				ddd: req.body.ddd,
+				telefone: req.body.telefone,
+				email: req.body.email ? req.body.email : null,
+				sincronizado: false,
+				no_id: req.body.no_id,
+			})
+			novoProspecto.save((err, no) => {
+				if(err){
+					objetoDeRetorno,menssagem = err
+					return res.send(objetoDeRetorno)
+				}
+				objetoDeRetorno.ok = true
+				return res.send(objetoDeRetorno)
+			})
+		}else{
+			objetoDeRetorno.menssagem = 'Dados invalidos'
+			return res.send(objetoDeRetorno)
+		}
+	}catch(error){
+		objetoDeRetorno.menssagem = error
+		return res.send(objetoDeRetorno)
+	}
+}
