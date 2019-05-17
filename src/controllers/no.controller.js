@@ -104,14 +104,16 @@ exports.sincronizar = async (req, res, next) => {
 						historicoNovo.save((err, res) => console.log('historico salvo'))
 					})
 					objetoDeRetorno.resultado.historico = 'Historico Subiu'
+					return res.send(objetoDeRetorno)
 				}
 			}else{
 				objetoDeRetorno.menssagem = 'Senha não iguais'
+				return res.send(objetoDeRetorno)
 			}
 		}else{
 			objetoDeRetorno.menssagem = 'Dados invalidos'
+			return res.send(objetoDeRetorno)
 		}
-		return res.send(objetoDeRetorno)
 	}catch(error){
 		objetoDeRetorno.menssagem = error
 		return res.send(objetoDeRetorno)
