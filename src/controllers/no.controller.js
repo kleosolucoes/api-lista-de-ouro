@@ -68,7 +68,6 @@ exports.sincronizar = async (req, res, next) => {
 	objetoDeRetorno.resultado = {}
 	try{
 		if(req.body.email && req.body.senha){
-
 			const noSelecionado = await No.findOne({email: req.body.email})
 			if(noSelecionado === null){
 				objetoDeRetorno.menssagem = 'Não registrado'
@@ -103,9 +102,9 @@ exports.sincronizar = async (req, res, next) => {
 						})
 						historicoNovo.save((err, res) => console.log('historico salvo'))
 					})
-					objetoDeRetorno.resultado.historico = 'Historico Subiu'
-					return res.send(objetoDeRetorno)
 				}
+				objetoDeRetorno.resultado.historico = 'Historico Subiu'
+				return res.send(objetoDeRetorno)
 			}else{
 				objetoDeRetorno.menssagem = 'Senha não iguais'
 				return res.send(objetoDeRetorno)
