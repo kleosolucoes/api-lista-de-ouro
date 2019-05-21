@@ -88,6 +88,7 @@ exports.logar = async (req, res, next) => {
 				/* senha correta */
 				objetoDeRetorno.ok = true
 				objetoDeRetorno.menssagem = 'Logado!!!'
+				objetoDeRetorno.resultado.no_id = noSelecionado.id
 				return res.send(objetoDeRetorno)
 			}else{
 				objetoDeRetorno.menssagem = 'Senha não iguais'
