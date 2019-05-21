@@ -71,6 +71,38 @@ exports.registrar = (req, res, next) => {
 	}
 }
 
+exports.logar = async (req, res, next) => {
+	objetoDeRetorno.ok = false 
+	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.resultado = {}
+	try{
+		if(req.body.email && req.body.senha){
+			const noSelecionado = await No.findOne({email: req.body.email})
+			if(noSelecionado === null){
+				objetoDeRetorno.menssagem = 'Não registrado'
+				return res.send(objetoDeRetorno)
+			}
+			const senhaTexto = req.body.senha + ''
+			const senhasIguais = bcrypt.compareSync(senhaTexto, noSelecionado.senha)
+			if(senhasIguais){
+				/* senha correta */
+				objetoDeRetorno.ok = true
+				objetoDeRetorno.menssagem = 'Logado!!!'
+				return res.send(objetoDeRetorno)
+			}else{
+				objetoDeRetorno.menssagem = 'Senha não iguais'
+				return res.send(objetoDeRetorno)
+			}
+		}else{
+			objetoDeRetorno.menssagem = 'Dados invalidos'
+			return res.send(objetoDeRetorno)
+		}
+	}catch(error){
+		objetoDeRetorno.menssagem = error
+		return res.send(objetoDeRetorno)
+	}
+}
+
 exports.sincronizar = async (req, res, next) => {
 	objetoDeRetorno.ok = false 
 	objetoDeRetorno.menssagem = ''
