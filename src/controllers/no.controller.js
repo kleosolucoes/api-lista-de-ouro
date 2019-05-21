@@ -28,23 +28,32 @@ exports.registrar = (req, res, next) => {
 					return res.json(objetoDeRetorno)
 				}
 				if(elemento === null){
-					const noNovo = new No({
-						data_criacao: pegarDataEHoraAtual()[0],
-						hora_criacao: pegarDataEHoraAtual()[1],
-						nome: req.body.nome,
-						ddd: req.body.ddd,
-						telefone: req.body.telefone,
-						email: req.body.email,
-						senha: req.body.senha,
-						pai_id: req.body.pai_id ? req.body.pai_id : null,
-					})
-					noNovo.save((err, no) => {
+					const senhaTexto = req.body.senha
+					bcrypt.hash(senhaTexto, null, null, (err, senhaHash) => {
 						if(err){
-							objetoDeRetorno,menssagem = err
-							return res.send(objetoDeRetorno)
+							objetoDeRetorno.menssagem = 'Erro ao transformar senha' 
+							return res.json(objetoDeRetorno)
 						}
-						objetoDeRetorno.ok = true
-						return res.send(objetoDeRetorno)
+
+						const noNovo = new No({
+							data_criacao: pegarDataEHoraAtual()[0],
+							hora_criacao: pegarDataEHoraAtual()[1],
+							nome: req.body.nome,
+							ddd: req.body.ddd,
+							telefone: req.body.telefone,
+							email: req.body.email,
+							senha: senhaHash,
+							pai_id: req.body.pai_id ? req.body.pai_id : null,
+						})
+						noNovo.save((err, no) => {
+							if(err){
+								objetoDeRetorno,menssagem = err
+								return res.send(objetoDeRetorno)
+							}
+							objetoDeRetorno.ok = true
+							return res.send(objetoDeRetorno)
+						})
+
 					})
 
 				}else{
