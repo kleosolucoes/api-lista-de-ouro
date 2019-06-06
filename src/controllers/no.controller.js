@@ -218,3 +218,40 @@ exports.cadastrarProspecto = (req, res, next) => {
 		return res.send(objetoDeRetorno)
 	}
 }
+
+exports.alterar = async (req, res, next) => {
+	objetoDeRetorno.ok = false 
+	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.resultado = {}
+	try{
+		if(
+			req.body.nome 
+			&& req.body.url
+			&& req.body.no_id
+		){
+			const noSelecionado = await No.findOne({id: req.body.no_id})
+			if(noSelecionado === null){
+				objetoDeRetorno.menssagem = 'Não registrado'
+				return res.send(objetoDeRetorno)
+			}
+
+			noSelecionado.nomeCaptura = req.body.nome
+			noSelecionado.url = req.body.url
+
+			noSelecionado.save((err, no) => {
+				if(err){
+					objetoDeRetorno,menssagem = err
+					return res.send(objetoDeRetorno)
+				}
+				objetoDeRetorno.ok = true
+				return res.send(objetoDeRetorno)
+			})
+		}else{
+			objetoDeRetorno.menssagem = 'Dados invalidos'
+			return res.send(objetoDeRetorno)
+		}
+	}catch(error){
+		objetoDeRetorno.menssagem = error
+		return res.send(objetoDeRetorno)
+	}
+}
