@@ -6,5 +6,6 @@ router.post('/registrar', noController.registrar)
 router.post('/logar', noController.logar)
 router.post('/sincronizar', noController.sincronizar)
 router.post('/cadastrarProspecto', noController.cadastrarProspecto)
+router.post('/alterar', noController.alterar)
 
 module.exports = router
