@@ -231,7 +231,7 @@ exports.alterar = async (req, res, next) => {
 	objetoDeRetorno.resultado = {}
 	try{
 		if(
-			req.body.nome 
+			req.body.nomeCaptura
 			&& req.body.url
 			&& req.body.email
 		){
@@ -241,7 +241,7 @@ exports.alterar = async (req, res, next) => {
 				return res.send(objetoDeRetorno)
 			}
 
-			noSelecionado.nomeCaptura = req.body.nome
+			noSelecionado.nomeCaptura = req.body.nomeCaptura
 			noSelecionado.url = req.body.url
 
 			noSelecionado.save((err, no) => {
