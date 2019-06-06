@@ -227,9 +227,9 @@ exports.alterar = async (req, res, next) => {
 		if(
 			req.body.nome 
 			&& req.body.url
-			&& req.body.no_id
+			&& req.body.email
 		){
-			const noSelecionado = await No.findOne({id: req.body.no_id})
+			const noSelecionado = await No.findOne({email: req.body.email})
 			if(noSelecionado === null){
 				objetoDeRetorno.menssagem = 'Não registrado'
 				return res.send(objetoDeRetorno)

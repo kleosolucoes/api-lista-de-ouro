@@ -12,6 +12,8 @@ let schema = new Schema({
 	ddd: {type: Number, required: false},
 	telefone: {type: Number, required: false},
 	pai_id: {type: String, required: false},
+	nomeCaptura: {type: String, required: false},
+	url: {type: String, required: false},
 })
 
 module.exports = mongoose.model('No', schema)
