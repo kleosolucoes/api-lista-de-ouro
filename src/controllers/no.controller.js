@@ -89,6 +89,12 @@ exports.logar = async (req, res, next) => {
 				objetoDeRetorno.ok = true
 				objetoDeRetorno.menssagem = 'Logado!!!'
 				objetoDeRetorno.resultado.no_id = noSelecionado.id
+				if(noSelecionado.nomeCaptura !== undefined){
+					objetoDeRetorno.resultado.nomeCaptura = noSelecionado.nomeCaptura
+				}
+				if(noSelecionado.url !== undefined){
+					objetoDeRetorno.resultado.url = noSelecionado.url
+				}
 				return res.send(objetoDeRetorno)
 			}else{
 				objetoDeRetorno.menssagem = 'Senha não iguais'
