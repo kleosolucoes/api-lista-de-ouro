@@ -14,6 +14,7 @@ let schema = new Schema({
 	pai_id: {type: String, required: false},
 	nomeCaptura: {type: String, required: false},
 	url: {type: String, required: false},
+	apelido: {type: String, required: false},
 })
 
 module.exports = mongoose.model('No', schema)
