@@ -243,6 +243,7 @@ exports.alterar = async (req, res, next) => {
 
 			noSelecionado.nomeCaptura = req.body.nomeCaptura
 			noSelecionado.url = req.body.url
+			noSelecionado.apelido = req.body.apelido ? req.body.apelido : null
 
 			noSelecionado.save((err, no) => {
 				if(err){
@@ -252,6 +253,28 @@ exports.alterar = async (req, res, next) => {
 				objetoDeRetorno.ok = true
 				return res.send(objetoDeRetorno)
 			})
+		}else{
+			objetoDeRetorno.menssagem = 'Dados invalidos'
+			return res.send(objetoDeRetorno)
+		}
+	}catch(error){
+		objetoDeRetorno.menssagem = error
+		return res.send(objetoDeRetorno)
+	}
+}
+
+exports.apelido = async (req, res, next) => {
+	objetoDeRetorno.ok = false 
+	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.resultado = {}
+	try{
+		if(
+			req.body.apelido
+		){
+			const noSelecionado = await No.findOne({apelido: req.body.apelido})
+			objetoDeRetorno.ok = true
+			objetoDeRetorno.resultado.no_id = noSelecionado.id
+			return res.send(objetoDeRetorno)
 		}else{
 			objetoDeRetorno.menssagem = 'Dados invalidos'
 			return res.send(objetoDeRetorno)
