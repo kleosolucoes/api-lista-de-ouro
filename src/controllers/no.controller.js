@@ -193,20 +193,23 @@ exports.cadastrarProspecto = (req, res, next) => {
 	try{
 		if(
 			req.body.nome 
-			&& req.body.ddd
 			&& req.body.telefone
 			&& req.body.no_id
 		){
+
+			const ddd = req.body.telefone.substr(0,2)
+			const telefone = req.body.telefone.substr(2)
 			const novoProspecto = new Prospecto({
 				data_criacao: pegarDataEHoraAtual()[0],
 				hora_criacao: pegarDataEHoraAtual()[1],
 				nome: req.body.nome,
-				ddd: req.body.ddd,
-				telefone: req.body.telefone,
+				ddd,
+				telefone,
 				email: req.body.email ? req.body.email : null,
 				sincronizado: false,
 				no_id: req.body.no_id,
 			})
+			console.log('novoProspecto', novoProspecto)
 			novoProspecto.save((err, no) => {
 				if(err){
 					objetoDeRetorno,mensagem = err
