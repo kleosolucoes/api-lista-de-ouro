@@ -9,7 +9,7 @@ import {
 
 exports.registrar = (req, res, next) => {
 	objetoDeRetorno.ok = false 
-	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.mensagem = ''
 	objetoDeRetorno.resultado = {}
 	try{
 		if(
@@ -24,14 +24,14 @@ exports.registrar = (req, res, next) => {
 				data_inativacao: null
 			}, (err, elemento) => {
 				if(err){
-					objetoDeRetorno.menssagem = 'Erro ao buscar usuario' 
+					objetoDeRetorno.mensagem = 'Erro ao buscar usuario' 
 					return res.json(objetoDeRetorno)
 				}
 				if(elemento === null){
 					const senhaTexto = req.body.senha
 					bcrypt.hash(senhaTexto, null, null, (err, senhaHash) => {
 						if(err){
-							objetoDeRetorno.menssagem = 'Erro ao transformar senha' 
+							objetoDeRetorno.mensagem = 'Erro ao transformar senha' 
 							return res.json(objetoDeRetorno)
 						}
 
@@ -47,7 +47,7 @@ exports.registrar = (req, res, next) => {
 						})
 						noNovo.save((err, no) => {
 							if(err){
-								objetoDeRetorno,menssagem = err
+								objetoDeRetorno,mensagem = err
 								return res.send(objetoDeRetorno)
 							}
 							objetoDeRetorno.ok = true
@@ -57,29 +57,29 @@ exports.registrar = (req, res, next) => {
 					})
 
 				}else{
-					objetoDeRetorno.menssagem = 'Email já utilizado' 
+					objetoDeRetorno.mensagem = 'Email já utilizado' 
 					return res.json(objetoDeRetorno)
 				}
 			})
 		}else{
-			objetoDeRetorno,menssagem = 'Dados Invalidos'
+			objetoDeRetorno,mensagem = 'Dados Invalidos'
 			return res.send(objetoDeRetorno)
 		}
 	}catch(error){
-		objetoDeRetorno.menssagem = error
+		objetoDeRetorno.mensagem = error
 		return res.send(objetoDeRetorno)
 	}
 }
 
 exports.logar = async (req, res, next) => {
 	objetoDeRetorno.ok = false 
-	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.mensagem = ''
 	objetoDeRetorno.resultado = {}
 	try{
 		if(req.body.email && req.body.senha){
 			const noSelecionado = await No.findOne({email: req.body.email})
 			if(noSelecionado === null){
-				objetoDeRetorno.menssagem = 'Não registrado'
+				objetoDeRetorno.mensagem = 'Não registrado'
 				return res.send(objetoDeRetorno)
 			}
 			const senhaTexto = req.body.senha + ''
@@ -87,7 +87,7 @@ exports.logar = async (req, res, next) => {
 			if(senhasIguais){
 				/* senha correta */
 				objetoDeRetorno.ok = true
-				objetoDeRetorno.menssagem = 'Logado!!!'
+				objetoDeRetorno.mensagem = 'Logado!!!'
 				objetoDeRetorno.resultado.no_id = noSelecionado.id
 				if(noSelecionado.nomeCaptura !== undefined){
 					objetoDeRetorno.resultado.nomeCaptura = noSelecionado.nomeCaptura
@@ -97,28 +97,28 @@ exports.logar = async (req, res, next) => {
 				}
 				return res.send(objetoDeRetorno)
 			}else{
-				objetoDeRetorno.menssagem = 'Senha não iguais'
+				objetoDeRetorno.mensagem = 'Senha não iguais'
 				return res.send(objetoDeRetorno)
 			}
 		}else{
-			objetoDeRetorno.menssagem = 'Dados invalidos'
+			objetoDeRetorno.mensagem = 'Dados invalidos'
 			return res.send(objetoDeRetorno)
 		}
 	}catch(error){
-		objetoDeRetorno.menssagem = error
+		objetoDeRetorno.mensagem = error
 		return res.send(objetoDeRetorno)
 	}
 }
 
 exports.sincronizar = async (req, res, next) => {
 	objetoDeRetorno.ok = false 
-	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.mensagem = ''
 	objetoDeRetorno.resultado = {}
 	try{
 		if(req.body.email && req.body.senha){
 			const noSelecionado = await No.findOne({email: req.body.email})
 			if(noSelecionado === null){
-				objetoDeRetorno.menssagem = 'Não registrado'
+				objetoDeRetorno.mensagem = 'Não registrado'
 				return res.send(objetoDeRetorno)
 			}
 			const senhaTexto = req.body.senha + ''
@@ -126,7 +126,7 @@ exports.sincronizar = async (req, res, next) => {
 			if(senhasIguais){
 				/* senha correta */
 				objetoDeRetorno.ok = true
-				objetoDeRetorno.menssagem = 'Logado!!!'
+				objetoDeRetorno.mensagem = 'Logado!!!'
 
 				/* buscando prospectos para baixar */
 				const prospectosDaWeb = await Prospecto.find({no_id: noSelecionado._id, sincronizado: false})
@@ -154,15 +154,15 @@ exports.sincronizar = async (req, res, next) => {
 				}
 				return res.send(objetoDeRetorno)
 			}else{
-				objetoDeRetorno.menssagem = 'Senha não iguais'
+				objetoDeRetorno.mensagem = 'Senha não iguais'
 				return res.send(objetoDeRetorno)
 			}
 		}else{
-			objetoDeRetorno.menssagem = 'Dados invalidos'
+			objetoDeRetorno.mensagem = 'Dados invalidos'
 			return res.send(objetoDeRetorno)
 		}
 	}catch(error){
-		objetoDeRetorno.menssagem = error
+		objetoDeRetorno.mensagem = error
 		return res.send(objetoDeRetorno)
 	}
 
@@ -188,7 +188,7 @@ function pegarDataEHoraAtual(){
 
 exports.cadastrarProspecto = (req, res, next) => {
 	objetoDeRetorno.ok = false 
-	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.mensagem = ''
 	objetoDeRetorno.resultado = {}
 	try{
 		if(
@@ -209,25 +209,25 @@ exports.cadastrarProspecto = (req, res, next) => {
 			})
 			novoProspecto.save((err, no) => {
 				if(err){
-					objetoDeRetorno,menssagem = err
+					objetoDeRetorno,mensagem = err
 					return res.send(objetoDeRetorno)
 				}
 				objetoDeRetorno.ok = true
 				return res.send(objetoDeRetorno)
 			})
 		}else{
-			objetoDeRetorno.menssagem = 'Dados invalidos'
+			objetoDeRetorno.mensagem = 'Dados invalidos'
 			return res.send(objetoDeRetorno)
 		}
 	}catch(error){
-		objetoDeRetorno.menssagem = error
+		objetoDeRetorno.mensagem = error
 		return res.send(objetoDeRetorno)
 	}
 }
 
 exports.alterar = async (req, res, next) => {
 	objetoDeRetorno.ok = false 
-	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.mensagem = ''
 	objetoDeRetorno.resultado = {}
 	try{
 		if(
@@ -237,7 +237,7 @@ exports.alterar = async (req, res, next) => {
 		){
 			const noSelecionado = await No.findOne({email: req.body.email})
 			if(noSelecionado === null){
-				objetoDeRetorno.menssagem = 'Não registrado'
+				objetoDeRetorno.mensagem = 'Não registrado'
 				return res.send(objetoDeRetorno)
 			}
 
@@ -247,25 +247,25 @@ exports.alterar = async (req, res, next) => {
 
 			noSelecionado.save((err, no) => {
 				if(err){
-					objetoDeRetorno,menssagem = err
+					objetoDeRetorno,mensagem = err
 					return res.send(objetoDeRetorno)
 				}
 				objetoDeRetorno.ok = true
 				return res.send(objetoDeRetorno)
 			})
 		}else{
-			objetoDeRetorno.menssagem = 'Dados invalidos'
+			objetoDeRetorno.mensagem = 'Dados invalidos'
 			return res.send(objetoDeRetorno)
 		}
 	}catch(error){
-		objetoDeRetorno.menssagem = error
+		objetoDeRetorno.mensagem = error
 		return res.send(objetoDeRetorno)
 	}
 }
 
 exports.apelido = async (req, res, next) => {
 	objetoDeRetorno.ok = false 
-	objetoDeRetorno.menssagem = ''
+	objetoDeRetorno.mensagem = ''
 	objetoDeRetorno.resultado = {}
 	try{
 		if(
@@ -273,7 +273,7 @@ exports.apelido = async (req, res, next) => {
 		){
 			const noSelecionado = await No.findOne({apelido: req.body.apelido})
 			if(noSelecionado === null){
-				objetoDeRetorno.menssagem = 'Patricionado não encontrado'
+				objetoDeRetorno.mensagem = 'Patricionado não encontrado'
 				return res.send(objetoDeRetorno)
 			}
 			objetoDeRetorno.ok = true
@@ -282,11 +282,11 @@ exports.apelido = async (req, res, next) => {
 			objetoDeRetorno.resultado.url = noSelecionado.url
 			return res.send(objetoDeRetorno)
 		}else{
-			objetoDeRetorno.menssagem = 'Dados invalidos'
+			objetoDeRetorno.mensagem = 'Dados invalidos'
 			return res.send(objetoDeRetorno)
 		}
 	}catch(error){
-		objetoDeRetorno.menssagem = error
+		objetoDeRetorno.mensagem = error
 		return res.send(objetoDeRetorno)
 	}
 }
