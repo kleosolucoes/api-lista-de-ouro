@@ -272,8 +272,14 @@ exports.apelido = async (req, res, next) => {
 			req.body.apelido
 		){
 			const noSelecionado = await No.findOne({apelido: req.body.apelido})
+			if(noSelecionado === null){
+				objetoDeRetorno.menssagem = 'Patricionado não encontrado'
+				return res.send(objetoDeRetorno)
+			}
 			objetoDeRetorno.ok = true
 			objetoDeRetorno.resultado.no_id = noSelecionado.id
+			objetoDeRetorno.resultado.nomeCaptura = noSelecionado.nomeCaptura
+			objetoDeRetorno.resultado.url = noSelecionado.url
 			return res.send(objetoDeRetorno)
 		}else{
 			objetoDeRetorno.menssagem = 'Dados invalidos'
